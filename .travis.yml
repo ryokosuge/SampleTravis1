@@ -1,0 +1,11 @@
+osx_image: xcode10.1
+language: objective-c 
+xcode_project: SampleTravis1.xcodeproj
+xcode_scheme: SampleTravis1
+xcode_destination: platform=iOS Simulator,OS=12.1,name=iPhone X
+after_success: |
+  echo "TRAVIS_BRANCH=$TRAVIS_BRANCH TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
+  if [[ ($TRAVIS_BRANCH == master) && ($TRAVIS_PULL_REQUEST == false) ]] ; then
+    curl -LO --retry 3 https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
+    sh trigger-travis.sh --pro ryokosuge SampleTravis2 $TRAVIS_ACCESS_TOKEN
+  fi
