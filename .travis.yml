@@ -11,7 +11,8 @@ stages:
       branch = master
 
 jobs:
-  - stage: kick-sample-travis2-job
-    after_success:
-      - sh trigger-travis-job.sh master ryokosuge SampleTravis2
-      - sh wait-travis-job.sh master ryokosuge SampleTravis2
+  include:
+    - stage: kick-sample-travis2-job
+      after_success:
+        - sh trigger-travis-job.sh master ryokosuge SampleTravis2
+        - sh wait-travis-job.sh master ryokosuge SampleTravis2
