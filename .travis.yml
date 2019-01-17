@@ -3,9 +3,15 @@ language: objective-c
 xcode_project: SampleTravis1.xcodeproj
 xcode_scheme: SampleTravis1
 xcode_destination: platform=iOS Simulator,OS=12.1,name=iPhone X
-after_success: |
-  echo "TRAVIS_BRANCH=$TRAVIS_BRANCH TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
-  if [[ ($TRAVIS_BRANCH == master) && ($TRAVIS_PULL_REQUEST == false) ]] ; then
-    sh trigger-travis-job.sh master ryokosuge SampleTravis2
-    sh wait-travis-job.sh master ryokosuge SampleTravis2
-  fi
+
+stages:
+  - name: kick-sample-travis2-job
+    if: |
+      type = push AND \
+      branch = master
+
+jobs:
+  - stage: kick-sample-travis2-job
+    after_success:
+      - sh trigger-travis-job.sh master ryokosuge SampleTravis2
+      - sh wait-travis-job.sh master ryokosuge SampleTravis2
