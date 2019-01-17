@@ -13,6 +13,8 @@ stages:
 jobs:
   include:
     - stage: kick-sample-travis2-job
+      before_install: brew install grep
+      brefore_script: export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
       after_success:
         - sh trigger-travis-job.sh master ryokosuge SampleTravis2
         - sh wait-travis-job.sh master ryokosuge SampleTravis2
